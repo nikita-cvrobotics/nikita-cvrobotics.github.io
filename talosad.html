@@ -1,0 +1,75 @@
+<html>
+	<head>
+		<title>Just a page bruh</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script>
+			var currSlide = 1;
+			function slideAd() {
+				var nextSlide = currSlide + 1;
+				if (nextSlide > 4) {
+					nextSlide = 1;
+				}
+				$("#s" + currSlide).css("left", "0px");
+				$("#s" + nextSlide).css("left", "100%");
+				$("#s" + currSlide).show();
+				$("#s" + nextSlide).show();
+				$("#s" + currSlide).animate({left: '-100%'}, 1000);
+				$("#s" + nextSlide).animate({left: '0px'}, 1000);
+				if (nextSlide < 4) {
+					$("#o" + nextSlide).fadeIn(1000);
+				}
+				if (currSlide < 4) {
+					$("#o" + currSlide).fadeOut(1000);
+				}
+				for (var i = 1; i < 5; i += 1) {
+					if (i != currSlide && i != nextSlide) {
+						$("#s" + i).hide();
+					}
+				}
+				currSlide = nextSlide;
+			}
+			$(document).ready(function() {
+				$("#talosAd").css("height", $(window).width() * 0.15625);
+				$("#s1").show();
+				$("#o1").show();
+				setInterval(slideAd, 3000);
+			});
+		</script>
+		<style>
+			body {
+				margin: 0px;
+			}
+			#talosAd {
+				width: 100%;
+				height: 156px;
+				position: fixed;
+				left: 0px;
+				top: 0px;
+				overflow: hidden;
+			}
+			.adSlide {
+				width: 100%;
+				height: 100%;
+				display: none;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			.adimg {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id=talosAd>
+			<div class="adSlide" id="s1"><img class="adimg" src="images/s1.jpg"></img></div>
+			<div class="adSlide" id="s2"><img class="adimg" src="images/s3.jpg"></img></div>
+			<div class="adSlide" id="s3"><img class="adimg" src="images/s2.jpg"></img></div>
+			<div class="adSlide" id="s4"><img class="adimg" src="images/Talos Logo.jpg"></img></div>
+			<div class="adSlide" id="o1"><img class="adimg" src="images/synergy.png"></img></div>
+			<div class="adSlide" id="o2"><img class="adimg" src="images/tenacity.png"></img></div>
+			<div class="adSlide" id="o3"><img class="adimg" src="images/theCloud.png"></img></div>
+		</div>
+	<body>
+</html>
