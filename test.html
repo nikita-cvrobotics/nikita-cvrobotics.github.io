@@ -4,7 +4,10 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script>
 			$(document).ready(function() {
-				
+				w = $(window).width();
+				h = $(window).height();
+				$("#txtMenu").css("width", w * .35 - 10);
+				$("#txtMenu").css("height", h * .94 - 10);
 			});
 		</script>
 		<style>
@@ -14,20 +17,38 @@
 			#mainBox>div {
 				float: left;
 			}
+			#statBar {
+				float: right;
+				width: 100%;
+			}
+			#drawPane {
+				width: 100%;
+				height: 100%;
+				background-color: #ffdddd;
+			}
+			#bottomBar {
+				
+			}
 		</style>
 	</head>
 	<body>
 		<div id="mainBox">
 			<div id="disp" style="width: 65%; height: 94%; background-color: #DDDDDD;">
-				<canvas></canvas>
+				<canvas id="drawPane">Canvas ain't supported.</canvas>
 			</div>
-			<div id="txtMenu" style="height: 94%; background-color: #ABABAB; padding: 5px;">
+			<div id="txtMenu" style="height: 94%; background-color: #ABABAB; padding: 5px 5px 0px 5px;">
 				<div id="statBar">
 					<button type="button" style="float: left"><<</button>
-					<div id="hNameIn">Blah</div>
+					<div  style="float: left; margin: 0px auto; right: -50%" id="hNameIn">Blah</div>
 					<button type="button" style="float: right">>></button>
 				</div>
+				<div>
+				
+				</div>
 			</div>
+		</div>
+		<div id="bottomBar">
+			test
 		</div>
 	</body>
 </html>
