@@ -22,6 +22,7 @@ function ciscoInterface(connType, connPort) {
   this.speed = "auto";
   this.duplex = "auto";
   this.portsec = false;
+  this.portsecMax = 1;
   this.enable = function() {
     
   };
@@ -33,17 +34,21 @@ function ciscoInterface(connType, connPort) {
   };
   this.setDuplex = function(newDuplex) {
     # newDuplex can be "default"
+    this.duplex = newDuplex;
+    this.update();
   };
   this.setSpeed = function(newSpeed) {
     # newSpeed can be "default"
     this.speed = newSpeed;
-    this.
+    this.update();
   };
   this.setPortsec = function(state) {
     this.portsec = state;
     this.update();
   };
-  this.
+  this.setPortsecMax = function(max) {
+    this.portSecMax = max;
+  }
   this.update = function() {
     
   }
