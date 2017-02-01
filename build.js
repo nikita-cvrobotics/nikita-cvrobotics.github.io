@@ -133,7 +133,8 @@ function ciscoSwitch() {
   this.interfaces = [];
   this.password = null;
   this.secret = null;
-  this.defaultGateway = null;
+  this.defaultGateway = "";
+  this.configDefault = null;
   for (var i=1; i<25; i++) {
     this.interfaces.push(ciscoInterface(fa, i));
   }
@@ -160,6 +161,10 @@ function ciscoSwitch() {
   }
   this.getRun = function() {
     return("version something");
+  };
+  this.getConfigFromBase = function() {
+    #This returns a list of steps to configure the switch from a specified default (at first, the switch with no config).
+    return [];
   };
   this.update = function() {
     
