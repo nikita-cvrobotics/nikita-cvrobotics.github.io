@@ -17,28 +17,61 @@ function ciscoLine(connType, connPort) {
     
   };
 }
+function ciscoVlan(vlID) {
+  this.vlanID = vlID;
+  this.ipaddress = null;
+  this.name = "";
+  this.desc = "";
+  this.setVlan = function(newVlan) {
+    this.vlanID = newVlan;
+    this.update();
+  };
+  this.setEncapsulation = function(newEncap) {
+    this.encapsulation = newEncap;
+    this.update();
+  };
+  this.setIpAddress = function(newIP) {
+    this.ipaddress = newIP;
+    this.update();
+  };
+  this.update = function() {
+    
+  };
+  this.checkErrors = function() {
+    return [];
+  };
+}
 function ciscoInterface(connType, connPort) {
-  this.isEnabled = true;
+  this.enabled = true;
+  this.desc = "";
+  this.vlan = 1;
   this.speed = "auto";
   this.duplex = "auto";
   this.portsec = false;
   this.portsecMax = 1;
+  this.portViolation = "protect";
+  this.portSticky = false;
+  this.macAddresses = [];
+  this.trunkMode = "auto";
+  this.trunkNative = 1;
+  this.trunkAllowedVlan = [];
   this.enable = function() {
-    
+    this.enabled = true;
+    this.update();
   };
   this.shut = function() {
-    
+    this.enabled = false;
+    this.update();
   };
-  this.setVlan = function() {
-    
+  this.setVlan = function(newVlan) {
+    this.vlan = newVlan;
+    this.update()
   };
   this.setDuplex = function(newDuplex) {
-    # newDuplex can be "default"
     this.duplex = newDuplex;
     this.update();
   };
   this.setSpeed = function(newSpeed) {
-    # newSpeed can be "default"
     this.speed = newSpeed;
     this.update();
   };
@@ -48,7 +81,32 @@ function ciscoInterface(connType, connPort) {
   };
   this.setPortsecMax = function(max) {
     this.portSecMax = max;
+    this.update();
   }
+  this.setPortViolation = function(action) {
+    this.portViolation = action;
+    this.update();
+  };
+  this.setPortSticky = function(state) {
+    this.portSticky = state;
+    this.update();
+  };
+  this.setMacs = function(macList) {
+    this.macAddresses = macList;
+    this.update();
+  };
+  this.setTrunkMode = function(newMode) {
+    this.trunkMode = newMode;
+    this.update();
+  };
+  this.setTrunkNatVlan = function(newVl) {
+    this.trunkNative = newVl;
+    this.update();
+  };
+  this.setTruAllowedVlan(vlRanges) {
+    this.trunkAllowedVlan = vlRanges;
+    this.update();
+  };
   this.update = function() {
     
   }
@@ -62,6 +120,7 @@ function ciscoSwitch() {
   this.interfaces = [];
   this.password = null;
   this.secret = null;
+  this.defaultGateway = null;
   for (var i=1; i<25; i++) {
     this.interfaces.push(ciscoInterface(fa, i));
   }
@@ -81,6 +140,11 @@ function ciscoSwitch() {
     this.secret = newSecret;
     this.update();
   };
+  this.setDefaultGateway = function(newDefaultGateway) {
+    this.defaultGateway = newDefaultGateway;
+    this.update();
+  }
+  this.
   this.update = function() {
     
   };
