@@ -1,3 +1,12 @@
+//String trim function added here
+if(typeof(String.prototype.trim) === "undefined")
+{
+    String.prototype.trim = function() 
+    {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
+}
+
 var fa = "FastEthernet";
 var gi = "GigabitEthernet";
 var con = "Console";
@@ -195,9 +204,15 @@ function ciscoSwitch() {
       result.push(currInt.desc);
       result.push("switchport mode " + currInt.trunkMode);
       if (currInt.trunkMode == trunk) {
-        
+        //insert pruning stuff later
       } else if (currInt.trunkMode == access) {
         result.push("switchport access vlan " + currInt.vlan);
+        if (currInt.portsec) {
+          result.push("switchport port-security");
+          //insert maximum ports later
+        } else {
+          result.push("no switchport port-security");
+        }
       }
       result.push("duplex " + currInt.duplex);
       result.push("speed " + currInt.speed);
@@ -211,21 +226,17 @@ function ciscoSwitch() {
     return result;
   };
   this.getConfigFromBase = function() {
-    #This returns a list of steps to configure the switch from a specified default (at first, the switch with no config).
+    //This returns a list of steps to configure the switch from a specified default (at first, the switch with no config).
     return [];
   };
   this.compare = function(compareList) {
-    if (typeof compareList === typeof []) {
-      
-    } else if (typeof compareList === typeof this) {
-      
-    }
+    
   };
   this.update = function() {
     
   };
   this.checkErrors = function() {
-    #check own errors first. Then:
+    //check own errors first. Then:
     for (var i=0; i<this.interfaces.length; i++) {
       this.interfaces[i].checkErrors();
     }
