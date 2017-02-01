@@ -5,6 +5,12 @@ var loop = "Loopback";
 var ser = "Serial";
 var con = "console";
 var vty = "vty";
+var trunk = "trunk";
+var access = "access";
+var auto = "auto";
+var dynauto = "dynamic auto";
+var dyndes = "dynamic desirable";
+var noneg = "no-negotiate"
 function ciscoLine(connType, connPort) {
   this.login = false;
   this.isPassword = false;
@@ -55,6 +61,9 @@ function ciscoVlan(vlID) {
   };
 }
 function ciscoInterface(connType, connPort) {
+  this.connType = connType;
+  this.connPort = connPort;
+  this.name = connType + "0/" + connPort.toString();
   this.enabled = true;
   this.desc = "";
   this.vlan = 1;
@@ -128,10 +137,12 @@ function ciscoInterface(connType, connPort) {
   };
 }
 function ciscoSwitch() {
+  this.connections = [];
   this.runText = "";
   this.runTextDefault = "";
   this.interfaces = [];
   this.password = null;
+  this.isPassEncrypt = false;
   this.secret = null;
   this.defaultGateway = "";
   this.configDefault = null;
@@ -151,6 +162,10 @@ function ciscoSwitch() {
     this.password = newPass;
     this.update();
   };
+  this.setPassEncrypt = function(state) {
+    this.isPassEncrypt = state;
+    this.update();
+  };
   this.setSecret = function(newSecret) {
     this.secret = newSecret;
     this.update();
@@ -160,7 +175,39 @@ function ciscoSwitch() {
     this.update();
   }
   this.getRun = function() {
-    return("version something");
+    result = [];
+    result.push("!");
+    result.push("version 12.2");
+    result.push("no service timestamps log datetime msec");
+    result.push("no service timestamps debug datetime msec");
+    if (this.isPassEncrypt) {
+      result.push("service password-encryption");
+    } else {
+      result.push("no service password-encryption");
+    }
+    result.push("!");
+    result.push(this.hostname);
+    result.push("spanning-tree mode pvst");
+    result.push("!");
+    for (var i=0; i<this.interfaces.length; i++) {
+      var currInt = this.interfaces[i];
+      result.push("interface " + currInt.name);
+      if (currInt.enabled) {
+        result.push("no shutdown");
+      } else {
+        result.push("shutdown");
+      }
+      result.push("switchport mode " + currInt.trunkMode);
+      if (currInt.trunkMode == trunk) {
+        
+      } else if (currInt.trunkMode == access) {
+        
+      }
+      result.push("duplex " + currInt.duplex);
+      result.push("speed " + currInt.speed);
+      result.push("!");
+    }
+    return result;
   };
   this.getConfigFromBase = function() {
     #This returns a list of steps to configure the switch from a specified default (at first, the switch with no config).
