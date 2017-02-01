@@ -9,17 +9,30 @@ function ciscoLine(connType, connPort) {
   this.login = false;
   this.isPassword = false;
   this.password = "";
+  this.isLogSync = false;
   this.setLogin = function(isLogin) {
     this.login = isLogin;
-    #--
+    this.update();
   };
   this.setPassword = function (falseOrPass) {
-    
+    if (falseOrPass == false) {
+      this.isPassword = false;
+      this.password = "";
+    } else {
+      this.isPassword = true;
+      this.password = falseOrPass;
+    }
+    this.update();
+  };
+  this.setLogSync = function(state) {
+    this.isLogSync = state;
+    this.update();
   };
 }
 function ciscoVlan(vlID) {
   this.vlanID = vlID;
-  this.ipaddress = null;
+  this.ipaddress = "";
+  this.subnetMask = "";
   this.name = "";
   this.desc = "";
   this.setVlan = function(newVlan) {
@@ -103,7 +116,7 @@ function ciscoInterface(connType, connPort) {
     this.trunkNative = newVl;
     this.update();
   };
-  this.setTruAllowedVlan(vlRanges) {
+  this.setTruAllowedVlan = function(vlRanges) {
     this.trunkAllowedVlan = vlRanges;
     this.update();
   };
@@ -144,7 +157,9 @@ function ciscoSwitch() {
     this.defaultGateway = newDefaultGateway;
     this.update();
   }
-  this.
+  this.getRun = function() {
+    return("version something");
+  };
   this.update = function() {
     
   };
