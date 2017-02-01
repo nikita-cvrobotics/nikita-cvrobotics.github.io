@@ -232,6 +232,9 @@ function ciscoSwitch() {
   this.compare = function(compareList) {
     
   };
+  this.configure = function(configScript) {
+    
+  }
   this.update = function() {
     
   };
