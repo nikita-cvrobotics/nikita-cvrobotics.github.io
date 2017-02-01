@@ -143,7 +143,8 @@ function ciscoSwitch() {
   this.runText = "";
   this.hostname = "Switch";
   this.setHostname = function(newName) {
-    
+    this.hostname = newName;
+    this.update();
   };
   this.setPassword = function(newPass) {
     this.password = newPass;
