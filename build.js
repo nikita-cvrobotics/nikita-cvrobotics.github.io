@@ -192,19 +192,20 @@ function ciscoSwitch() {
     for (var i=0; i<this.interfaces.length; i++) {
       var currInt = this.interfaces[i];
       result.push("interface " + currInt.name);
+      result.push(currInt.desc);
+      result.push("switchport mode " + currInt.trunkMode);
+      if (currInt.trunkMode == trunk) {
+        
+      } else if (currInt.trunkMode == access) {
+        result.push("switchport access vlan " + currInt.vlan);
+      }
+      result.push("duplex " + currInt.duplex);
+      result.push("speed " + currInt.speed);
       if (currInt.enabled) {
         result.push("no shutdown");
       } else {
         result.push("shutdown");
       }
-      result.push("switchport mode " + currInt.trunkMode);
-      if (currInt.trunkMode == trunk) {
-        
-      } else if (currInt.trunkMode == access) {
-        
-      }
-      result.push("duplex " + currInt.duplex);
-      result.push("speed " + currInt.speed);
       result.push("!");
     }
     return result;
@@ -212,6 +213,13 @@ function ciscoSwitch() {
   this.getConfigFromBase = function() {
     #This returns a list of steps to configure the switch from a specified default (at first, the switch with no config).
     return [];
+  };
+  this.compare = function(compareList) {
+    if (typeof compareList === typeof []) {
+      
+    } else if (typeof compareList === typeof this) {
+      
+    }
   };
   this.update = function() {
     
